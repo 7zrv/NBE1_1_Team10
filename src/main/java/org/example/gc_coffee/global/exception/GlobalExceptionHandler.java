@@ -1,8 +1,9 @@
 package org.example.gc_coffee.global.exception;
 
 
-import com.yoon.dailydevelop.global.common.response.ExceptionResponse;
+
 import lombok.extern.slf4j.Slf4j;
+import org.example.gc_coffee.global.common.response.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

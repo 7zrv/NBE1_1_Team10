@@ -16,7 +16,7 @@ public enum ExceptionCode {
     INVALID_EMAIL(401, "이메일이나 비밀번호가 일치하지 않습니다."),
 
     //conflict
-    DUPLICATED_USER_EMAIL(409, "이미 가입된 이메일입니다.");
+    DUPLICATED_PRODUCT_NAME(409, "이미 존재하는 상품명입니다.");
 
 
     private final int code;

@@ -6,14 +6,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.gc_coffee.global.common.BaseEntity;
 
 import java.time.Instant;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends BaseEntity {
     @Id
     @Column(name = "order_id", nullable = false, length = 16)
     private String orderId;
@@ -30,10 +30,6 @@ public class Order {
     @Column(name = "order_status", nullable = false, length = 50)
     private String orderStatus;
 
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
 
-    @Column(name = "updated_at")
-    private Instant updatedAt;
 
 }

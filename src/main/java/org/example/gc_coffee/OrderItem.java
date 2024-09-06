@@ -3,6 +3,7 @@ package org.example.gc_coffee;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.gc_coffee.global.common.BaseEntity;
 
 import java.time.Instant;
 
@@ -10,7 +11,7 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "order_items")
-public class OrderItem {
+public class OrderItem extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seq", nullable = false)
@@ -25,10 +26,6 @@ public class OrderItem {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
 
-    @Column(name = "updated_at")
-    private Instant updatedAt;
 
 }
