@@ -9,6 +9,8 @@ import org.example.gc_coffee.product.requestDto.CreateProductRequestDto;
 import org.example.gc_coffee.product.responseDto.ProductResponseDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static org.example.gc_coffee.global.exception.ExceptionCode.DUPLICATED_PRODUCT_NAME;
 
 @RequiredArgsConstructor
@@ -33,5 +35,14 @@ public class ProductService {
         if (productRepository.existsByProductName(productName)) {
             throw new DuplicateException(DUPLICATED_PRODUCT_NAME);
         }
+    }
+
+    public List<ProductResponseDto> getAllProduct() {
+
+        List<Product> products = productRepository.findAll();
+
+        return products.stream()
+                .map(ProductResponseDto::from)
+                .toList();
     }
 }
