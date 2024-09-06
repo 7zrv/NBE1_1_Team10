@@ -19,7 +19,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-
+    //상픔 등록 메서드
     public ProductResponseDto createProduct(CreateProductRequestDto requestDto) {
 
         checkProductNameDuplicate(requestDto.getProductName());
@@ -31,12 +31,14 @@ public class ProductService {
         return ProductResponseDto.from(product);
     }
 
+    //상품명 중복체크 메서드
     private void checkProductNameDuplicate(String productName) {
         if (productRepository.existsByProductName(productName)) {
             throw new DuplicateException(DUPLICATED_PRODUCT_NAME);
         }
     }
 
+    //전체 상품 목록 반환 메서드
     public List<ProductResponseDto> getAllProduct() {
 
         List<Product> products = productRepository.findAll();
@@ -45,4 +47,6 @@ public class ProductService {
                 .map(ProductResponseDto::from)
                 .toList();
     }
+
+
 }

@@ -17,22 +17,24 @@ public class ProductApiController {
 
     private final ProductService productService;
 
+    //상품등록 컨트롤러
     @PostMapping("")
-    public ApiResponse<ProductResponseDto> registerUser(@RequestBody CreateProductRequestDto requestDto) {
+    public ApiResponse<ProductResponseDto> CreateProduct(@RequestBody CreateProductRequestDto requestDto) {
 
         ProductResponseDto responseDto = productService.createProduct(requestDto);
 
         return ApiResponse.ok(201, responseDto, "상품 등록 성공");
     }
 
+    //상품 전체목록 조회 컨트롤러
     @GetMapping("")
     public ApiResponse<List<ProductResponseDto>> getAllProducts() {
-
-        System.out.println("실행됨");
 
         List<ProductResponseDto> responseDtos = productService.getAllProduct();
 
         return ApiResponse.ok(200, responseDtos, "상품 목록 요청 성공");
     }
+
+
 
 }
