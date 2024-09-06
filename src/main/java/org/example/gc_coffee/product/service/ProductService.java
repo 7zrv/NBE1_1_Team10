@@ -43,6 +43,7 @@ public class ProductService {
 
         List<Product> products = productRepository.findAll();
 
+
         return products.stream()
                 .map(ProductResponseDto::from)
                 .toList();

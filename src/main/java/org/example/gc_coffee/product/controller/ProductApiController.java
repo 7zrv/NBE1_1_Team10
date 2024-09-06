@@ -1,6 +1,7 @@
 package org.example.gc_coffee.product.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.gc_coffee.global.common.response.ApiResponse;
 import org.example.gc_coffee.product.requestDto.CreateProductRequestDto;
@@ -19,7 +20,7 @@ public class ProductApiController {
 
     //상품등록 컨트롤러
     @PostMapping("")
-    public ApiResponse<ProductResponseDto> CreateProduct(@RequestBody CreateProductRequestDto requestDto) {
+    public ApiResponse<ProductResponseDto> CreateProduct(@RequestBody @Valid CreateProductRequestDto requestDto) {
 
         ProductResponseDto responseDto = productService.createProduct(requestDto);
 

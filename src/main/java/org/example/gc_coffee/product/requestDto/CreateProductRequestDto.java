@@ -1,7 +1,9 @@
 package org.example.gc_coffee.product.requestDto;
 
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import org.example.gc_coffee.product.entity.Product;
 
@@ -16,7 +18,7 @@ public class CreateProductRequestDto {
     @NotBlank(message = "카테고리를 입력해주세요.")
     private String category;
 
-    @NotBlank(message = "가격을 입력해주세요.")
+    @NotNull(message = "가격을 입력해주세요.")
     private Long price;
 
     @NotEmpty(message = "제품 설명을 입력해주세요.")
