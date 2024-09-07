@@ -1,22 +1,24 @@
-package org.example.gc_coffee;
+package org.example.gc_coffee.order.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.example.gc_coffee.global.common.BaseEntity;
 
-import java.time.Instant;
+import java.util.UUID;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
-    @Id
+
+
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id", nullable = false, length = 16)
-    private String orderId;
+    private UUID orderId;
 
     @Column(name = "email", nullable = false, length = 50)
     private String email;
@@ -30,6 +32,12 @@ public class Order extends BaseEntity {
     @Column(name = "order_status", nullable = false, length = 50)
     private String orderStatus;
 
-
+    @Builder
+    public Order(String email, String address, String postcode, String orderStatus) {
+        this.email = email;
+        this.address = address;
+        this.postcode = postcode;
+        this.orderStatus = orderStatus;
+    }
 
 }
