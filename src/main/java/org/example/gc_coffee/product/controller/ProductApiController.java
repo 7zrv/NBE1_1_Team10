@@ -22,7 +22,7 @@ public class ProductApiController {
 
     //상품등록 컨트롤러
     @PostMapping("")
-    public ApiResponse<ProductResponseDto> CreateProduct(@RequestBody @Valid CreateProductRequestDto requestDto) {
+    public ApiResponse<ProductResponseDto> createProduct(@RequestBody @Valid CreateProductRequestDto requestDto) {
 
         ProductResponseDto responseDto = productService.createProduct(requestDto);
 

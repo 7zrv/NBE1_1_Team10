@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.gc_coffee.global.common.BaseEntity;
+import org.example.gc_coffee.order.type.OrderStatus;
 
 import java.util.UUID;
 
@@ -29,15 +30,16 @@ public class Order extends BaseEntity {
     @Column(name = "postcode", nullable = false, length = 200)
     private String postcode;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false, length = 50)
-    private String orderStatus;
+    private OrderStatus orderStatus;
 
     @Builder
-    public Order(String email, String address, String postcode, String orderStatus) {
+    public Order(String email, String address, String postcode) {
         this.email = email;
         this.address = address;
         this.postcode = postcode;
-        this.orderStatus = orderStatus;
+        this.orderStatus = OrderStatus.ORDER_PLACED;
     }
 
 }
