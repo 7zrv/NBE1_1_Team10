@@ -27,8 +27,10 @@ public class OrderApiController {
 
         OrderResponseDto responseDto = orderSerivce.createOrder(requestDto);
 
-        return ApiResponse.ok(201, responseDto, "상품 주문 성공");
+        return ApiResponse.ok(201, responseDto, "14시이후 주문은 익일 14시에 배송됩니다.");
     }
+
+
 
 
 }
