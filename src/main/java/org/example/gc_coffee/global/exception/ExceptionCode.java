@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 public enum ExceptionCode {
 
     //Bad Request
-    NOT_FOUND_USER_ID(400, "해당하는 유저가 존재하지 않습니다."),
+    NOT_FOUND_PRODUCT_ID(400, "해당하는 상품이 존재하지 않습니다."),
 
     //Unauthorized
     INVALID_PASSWORD(401, "이메일이나 비밀번호가 일치하지 않습니다."),

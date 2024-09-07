@@ -2,16 +2,20 @@ package org.example.gc_coffee.product.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.gc_coffee.global.exception.BadRequestException;
 import org.example.gc_coffee.global.exception.DuplicateException;
 import org.example.gc_coffee.product.entity.Product;
 import org.example.gc_coffee.product.repository.ProductRepository;
 import org.example.gc_coffee.product.requestDto.CreateProductRequestDto;
+import org.example.gc_coffee.product.requestDto.UpdateProductRequestDto;
 import org.example.gc_coffee.product.responseDto.ProductResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.example.gc_coffee.global.exception.ExceptionCode.DUPLICATED_PRODUCT_NAME;
+import static org.example.gc_coffee.global.exception.ExceptionCode.NOT_FOUND_PRODUCT_ID;
 
 @RequiredArgsConstructor
 @Service
@@ -48,6 +52,20 @@ public class ProductService {
                 .map(ProductResponseDto::from)
                 .toList();
     }
+
+    //상품 정보 업데이트 메서드
+    public ProductResponseDto updateProductInfo(UUID productId, UpdateProductRequestDto requestDto) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_PRODUCT_ID));
+
+        product.updateInfo(requestDto);
+
+        productRepository.save(product);
+
+        return ProductResponseDto.from(product);
+    }
+
 
 
 }
