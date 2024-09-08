@@ -9,6 +9,7 @@ import org.example.gc_coffee.order.entity.Order;
 import org.example.gc_coffee.order.repository.OrderRepository;
 import org.example.gc_coffee.order.requestDto.CreateOrderRequestDto;
 import org.example.gc_coffee.order.responseDto.OrderResponseDto;
+import org.example.gc_coffee.order.type.OrderStatus;
 import org.example.gc_coffee.orderItem.entity.OrderItem;
 import org.example.gc_coffee.orderItem.requestDto.CreateOrderItemRequestDto;
 import org.example.gc_coffee.orderItem.responseDto.OrderItemResponse;
@@ -18,6 +19,7 @@ import org.example.gc_coffee.product.repository.ProductRepository;
 import org.example.gc_coffee.product.service.ProductService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -92,4 +94,9 @@ public class OrderSerivce {
         orderRepository.deleteById(order.getOrderId());
     }
 
+
+    public void updateOrderStatus(LocalDateTime startOfDay, LocalDateTime endOfDay) {
+
+        orderRepository.updateOrderStatus(OrderStatus.SHIPPED, startOfDay, endOfDay);
+    }
 }
