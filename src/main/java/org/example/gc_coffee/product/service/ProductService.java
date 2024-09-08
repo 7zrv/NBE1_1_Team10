@@ -56,14 +56,19 @@ public class ProductService {
     //상품 정보 업데이트 메서드
     public ProductResponseDto updateProductInfo(UUID productId, UpdateProductRequestDto requestDto) {
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new BadRequestException(NOT_FOUND_PRODUCT_ID));
+        Product product = getProductById(productId);
 
         product.updateInfo(requestDto);
 
         productRepository.save(product);
 
         return ProductResponseDto.from(product);
+    }
+
+    //pk를 이용한 상품 단건 조회 메서드
+    public Product getProductById(UUID productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new BadRequestException(NOT_FOUND_PRODUCT_ID));
     }
 
 
