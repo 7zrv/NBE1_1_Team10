@@ -27,6 +27,7 @@ public class OrderApiController {
         return ApiResponse.ok(201, responseDto, "상품 주문 성공");
     }
 
+    //pk를 이용한 주문 단건조회 컨트롤러
     @GetMapping("/{orderId}")
     public ApiResponse<OrderResponseDto> getOrder(@PathVariable UUID orderId) {
 
@@ -35,5 +36,13 @@ public class OrderApiController {
         return ApiResponse.ok(200, responseDto, "주문 조회 성공");
     }
 
+    //주문취소 컨트롤러
+    @DeleteMapping("/{orderId}")
+    public ApiResponse<?> deleteOrder(@PathVariable UUID orderId) {
+
+        orderSerivce.deleteOrder(orderId);
+
+        return ApiResponse.ok("주문 취소 성공");
+    }
 
 }

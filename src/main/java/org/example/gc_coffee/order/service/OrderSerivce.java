@@ -49,4 +49,11 @@ public class OrderSerivce {
     }
 
 
+    public void deleteOrder(UUID orderId) {
+
+        Order order = findOrderById(orderId);
+
+        orderRepository.deleteById(order.getOrderId());
+    }
+
 }
