@@ -37,6 +37,7 @@ public class OrderSerivce {
 
 
     //주문 등록 메서드
+    //rollbackOn 빼도 될 거 같기도?
     @Transactional(rollbackOn = BadRequestException.class)
     public OrderResponseDto createOrder(CreateOrderRequestDto requestDto) {
 
@@ -44,26 +45,18 @@ public class OrderSerivce {
 
         orderRepository.save(order);
 
-        //팩토리 메서드로 생성될 orderItems 객체를 넣을 리스트
-        List<OrderItem> orderItems = new ArrayList<>();
-
-        //orderItems 반환에 이용할 response를 담을객체
+        //orderItems 응답값을 담을 리스트
         List<OrderItemResponse> orderItemResponses = new ArrayList<>();
 
         //request의 item들을 팩토리 메서드로 객체화
         for (CreateOrderItemRequestDto itemDto : requestDto.getItems()) {
 
             Product product = productService.getProductById(itemDto.getProductId());
-            orderItems.add(itemDto.of(product, order));
+
+            orderItemService.createOrderItem(itemDto.of(product, order));
+
+            orderItemResponses.add(OrderItemResponse.from(itemDto.of(product, order)));
         }
-
-        //객체화된 item들을 저장
-        for (OrderItem orderItem : orderItems) {
-
-            orderItemService.createOrderItem(orderItem);
-            orderItemResponses.add(OrderItemResponse.from(orderItem));
-        }
-
 
 
         return OrderResponseDto.of(order, orderItemResponses);
