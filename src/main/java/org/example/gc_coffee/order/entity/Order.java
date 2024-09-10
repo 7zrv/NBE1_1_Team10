@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.gc_coffee.global.common.BaseEntity;
 import org.example.gc_coffee.order.type.OrderStatus;
+import org.example.gc_coffee.orderItem.entity.OrderItem;
 
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

@@ -53,6 +53,7 @@ public class OrderSerivce {
 
             Product product = productService.getProductById(itemDto.getProductId());
 
+            //메서드 안에서 saveAll을 쓴다면?
             orderItemService.createOrderItem(itemDto.of(product, order));
 
             orderItemResponses.add(OrderItemResponse.from(itemDto.of(product, order)));

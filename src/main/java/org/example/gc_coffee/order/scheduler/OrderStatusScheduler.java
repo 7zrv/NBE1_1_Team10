@@ -15,7 +15,7 @@ public class OrderStatusScheduler {
     private final OrderSerivce orderSerivce;
 
     // 매일 14시에 실행
-    @Scheduled(cron = "0 0 14 * * ?")
+    @Scheduled(cron = "0 0 14 * * *")
     public void updateOrderStatus() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime startOfDay = now.minusDays(1).withHour(14).withMinute(0).withSecond(0).withNano(0);
