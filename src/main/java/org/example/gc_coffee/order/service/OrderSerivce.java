@@ -23,7 +23,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.example.gc_coffee.global.exception.ExceptionCode.NOT_FOUND_ORDER_ID;
 import static org.example.gc_coffee.global.exception.ExceptionCode.NOT_FOUND_PRODUCT_ID;
@@ -39,31 +42,43 @@ public class OrderSerivce {
 
     //주문 등록 메서드
     @TimeTrace
+    @Transactional
     public OrderResponseDto createOrder(CreateOrderRequestDto requestDto) {
 
         Order order = requestDto.toEntity();
+        orderRepository.save(order);  // Order는 즉시 저장
 
-        orderRepository.save(order);
+        // productId 목록을 먼저 수집
+        List<UUID> productIds = requestDto.getItems().stream()
+                .map(CreateOrderItemRequestDto::getProductId)
+                .collect(Collectors.toList());
 
+        // productId 목록으로 한번에 제품 조회
+        Map<UUID, Product> productMap = productService.getProductByIds(productIds).stream()
+                .collect(Collectors.toMap(Product::getProductId, Function.identity()));
 
-
-        //orderItems 응답값을 담을 리스트
+        // orderItems 및 응답 객체 생성
+        List<OrderItem> orderItems = new ArrayList<>();
         List<OrderItemResponse> orderItemResponses = new ArrayList<>();
 
-        //request의 item들을 팩토리 메서드로 객체화
         for (CreateOrderItemRequestDto itemDto : requestDto.getItems()) {
 
-            Product product = productService.getProductById(itemDto.getProductId());
+            // 미리 조회한 Product 리스트에서 해당 제품 찾기
+            Product product = productMap.get(itemDto.getProductId());
 
-            //메서드 안에서 saveAll을 쓴다면?
-            orderItemService.createOrderItem(itemDto.of(product, order));
-
-            orderItemResponses.add(OrderItemResponse.from(itemDto.of(product, order)));
+            OrderItem orderItem = itemDto.of(product, order);
+            orderItems.add(orderItem);
+            orderItemResponses.add(OrderItemResponse.from(orderItem));
         }
 
+        // orderItems 한번에 저장 (saveAll)
+        orderItemService.createOrderItems(orderItems);
 
+        // 응답 반환
         return OrderResponseDto.of(order, orderItemResponses);
     }
+
+
 
 
     //주문 단건 조회

@@ -72,5 +72,7 @@ public class ProductService {
     }
 
 
-
+    public List<Product> getProductByIds(List<UUID> productIds) {
+        return productRepository.findAllById(productIds);
+    }
 }

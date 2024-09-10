@@ -34,4 +34,8 @@ public class OrderItemService {
         return orderItemRepository.findByOrder(order)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_ITEM_ID));
     }
+
+    public void createOrderItems(List<OrderItem> orderItems) {
+        orderItemRepository.saveAll(orderItems);
+    }
 }

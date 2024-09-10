@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Product extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "product_id", columnDefinition = "BiINARY(16)")
+    @Column(name = "product_id", columnDefinition = "BINARY(16)")
     private UUID productId;
 
     @Column(name = "product_name", nullable = false, length = 20)
