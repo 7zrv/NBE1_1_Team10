@@ -4,6 +4,7 @@ package org.example.gc_coffee.order.service;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.gc_coffee.global.configure.aop.TimeTrace;
 import org.example.gc_coffee.global.exception.BadRequestException;
 import org.example.gc_coffee.order.entity.Order;
 import org.example.gc_coffee.order.repository.OrderRepository;
@@ -37,13 +38,14 @@ public class OrderSerivce {
 
 
     //주문 등록 메서드
-    //rollbackOn 빼도 될 거 같기도?
-    @Transactional(rollbackOn = BadRequestException.class)
+    @TimeTrace
     public OrderResponseDto createOrder(CreateOrderRequestDto requestDto) {
 
         Order order = requestDto.toEntity();
 
         orderRepository.save(order);
+
+
 
         //orderItems 응답값을 담을 리스트
         List<OrderItemResponse> orderItemResponses = new ArrayList<>();
